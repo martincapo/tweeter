@@ -1,0 +1,45 @@
+.new-tweet {
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.new-tweet h2:after {
+    content:' ';
+    display:block;
+    border:1px solid black;
+}
+
+.new-tweet textarea {
+  width: 100%;
+  padding: 10px;
+}
+
+.new-tweet button {
+  background-color: #FFFFFF;
+  border: 1px solid;
+  border-radius: 5px;
+  color: green;
+  cursor: pointer;
+  padding: 15px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 25px;
+  float: right;
+  margin-top: 7px;
+}
+
+.new-tweet .counter {
+   float:right;
+}
+
+.negative {
+  color:red;
+}
+
+.positive {
+  color: black;
+}
+

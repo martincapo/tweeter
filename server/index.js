@@ -22,6 +22,20 @@ const db = require("./lib/in-memory-db");
 // require it and pass the `db` parameter immediately:
 const DataHelpers = require("./lib/data-helpers.js")(db);
 
+//   It returns ----->
+//      name: userName,
+//      handle: userHandle,
+//      avatars: avatars
+const userHelper = require("./lib/util/user-helper.js");
+
+// This module exports a utility function for simulating
+// delay (for example, in network or file system operations)
+// using the builtin setTimeout.
+//
+// This is used to make the front-end behaviour a little more
+// realistic even while we use a simplistic "in-memory" db.
+const simulateDelay = require("./lib/util/simulate-delay.js");
+
 // The `tweets-routes` module works similarly: we pass it the `DataHelpers` object
 // so it can define routes that use it to interact with the data layer.
 const tweetsRoutes = require("./routes/tweets")(DataHelpers);
