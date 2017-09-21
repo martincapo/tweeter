@@ -5,10 +5,7 @@
  */
 
 function renderTweets(tweets) {
-  // Sort Tweet descending order by created time.
-  tweets.sort(function (current, next) {
-    return current.created_at < next.created_at;
-  });
+  tweets.reverse();
   tweets.forEach((element) => {
     $('#tweets-container').append(createTweetElement(element));
   });
@@ -54,9 +51,10 @@ function loadTweets() {
   });
 }
 
-function fadeToggleNewTweetTextArea() {
+function toggleNewTweetTextArea() {
   $('.compose').on('click', function(event) {
-    $('.new-tweet').fadeToggle();
+    $('.new-tweet').slideToggle(300);
+    $('.textarea').select();
   });
 }
 
@@ -69,7 +67,7 @@ $(document).ready(function() {
   $("form" ).on( "submit", function( event ) {
     event.preventDefault();
     var textInput = $(event.target).serialize();
-    var inputValue = $("form").find("textarea").val('');
+    var inputValue = $("form").find("textarea").val();
 
     if(inputValue === null || inputValue === '') {
       alert("Tweet is empty!!! ");
@@ -81,6 +79,7 @@ $(document).ready(function() {
       $.post("/tweets/", textInput)
       .done(function(result){
         loadTweets();
+        $(".textarea").val('');
       })
       .fail(function(error){
         console.log(error);
@@ -88,6 +87,6 @@ $(document).ready(function() {
     }
   });
 
-  fadeToggleNewTweetTextArea();
+  toggleNewTweetTextArea();
 
 });

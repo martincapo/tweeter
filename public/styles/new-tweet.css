@@ -3,12 +3,13 @@
   border-radius: 5px;
   padding: 15px;
   margin-bottom: 20px;
+  display: none;
 }
 
 .new-tweet h2:after {
-    content:' ';
-    display:block;
-    border:1px solid black;
+  content:' ';
+  display:block;
+  border:1px solid black;
 }
 
 .new-tweet textarea {
