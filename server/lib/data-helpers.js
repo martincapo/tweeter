@@ -17,7 +17,7 @@ module.exports = function makeDataHelpers(db) {
 
     // Get all tweets in `db`, sorted by newest first
     getTweets: function(callback) {
-      let  tweet = db.collection('tweets').find().toArray((err, results) => {
+      db.collection('tweets').find().toArray((err, results) => {
         if (err) throw err;
 
         const sortNewestFirst = (a, b) => a.created_at - b.created_at;
@@ -26,11 +26,3 @@ module.exports = function makeDataHelpers(db) {
     }
   }
 }
-
-// db.collection('inventory').insertOne({
-//   item: "canvas",
-//   qty: 100,
-//   tags: ["cotton"],
-//   size: { h: 28, w: 35.5, uom: "cm" }
-// })
-// .then(function(result) {
