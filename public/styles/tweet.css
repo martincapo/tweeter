@@ -30,7 +30,7 @@
   padding: 5px 5px;
 }
 
-.tweet header h3 {
+.tweet header h4 {
   float: left;
   padding-left: 1em;
 }
@@ -38,6 +38,8 @@
 .tweet header p {
   float: right;
   color: #939393;
+  font-size: 12px;
+  padding-top: 12px;
 }
 
 .tweet section {
@@ -58,6 +60,5 @@
 .tweet footer div {
   visibility: hidden;
   float: right;
-  color: #00A087;
 }
 

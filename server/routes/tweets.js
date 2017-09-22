@@ -24,12 +24,14 @@ module.exports = function(DataHelpers) {
     }
 
     const user = req.body.user ? req.body.user : userHelper.generateRandomUser();
+
     const tweet = {
       user: user,
       content: {
         text: req.body.text
       },
-      created_at: Date.now()
+      created_at: Date.now(),
+      likes: 0 // <----- modify to update likes click
     };
 
     DataHelpers.saveTweet(tweet, (err) => {
@@ -39,6 +41,12 @@ module.exports = function(DataHelpers) {
         res.status(201).send();
       }
     });
+  });
+
+  tweetsRoutes.post("/like", function(req, res) {
+
+    console.log(req.body);
+
   });
 
   return tweetsRoutes;

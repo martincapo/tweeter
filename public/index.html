@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
     <!-- Meta Information -->
     <title>Tweeter - Home Page</title>
 
@@ -26,11 +29,7 @@
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
 
-    <script>
-
-
-    </script>
-  </head>
+  <head>
 
   <body>
 
@@ -38,6 +37,7 @@
     <nav id="nav-bar">
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
+      <a href="/register"><span class="register">Register</span></a>
       <button type="submit" class="compose">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Compose
       </button>
@@ -50,7 +50,7 @@
         <form>
           <textarea name="text" class="textarea" placeholder="What are you humming about?" autofocus="autofocus"></textarea>
           <input type="submit" value="Tweet">
-          <span class="counter"></span>
+          <span class="counter">140</span>
         </form>
       </section>
 

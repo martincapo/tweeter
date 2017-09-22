@@ -4,6 +4,10 @@
 const PORT          = 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
+const cookieSession = require('cookie-session');
+const bcrypt = require('bcrypt');
+const morgan = require('morgan');
+
 const app           = express();
 
 const MongoClient = require("mongodb").MongoClient;
@@ -12,19 +16,22 @@ const MONGODB_URI = "mongodb://localhost:27017/tweeter";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-//   It returns ----->
-//      name: userName,
-//      handle: userHandle,
-//      avatars: avatars
-const userHelper = require("./lib/util/user-helper.js");
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
 
-// This module exports a utility function for simulating
-// delay (for example, in network or file system operations)
-// using the builtin setTimeout.
-//
-// This is used to make the front-end behaviour a little more
-// realistic even while we use a simplistic "in-memory" db.
-const simulateDelay = require("./lib/util/simulate-delay.js");
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
+
+app.set("view engine", "ejs");
+
+// logging middleware so we can see what's going on
+app.use(morgan('dev'))
+
+
+
+
 
 // Connect to MongoDB
 MongoClient.connect(MONGODB_URI, (err, db) => {
@@ -44,15 +51,27 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
 // The `tweets-routes` module works similarly: we pass it the `DataHelpers` object
 // so it can define routes that use it to interact with the data layer.
-// const tweetsRoutes = require("./routes/tweets")(DataHelpers);
 
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
 
 // Mount the tweets routes at the "/tweets" path prefix:
   app.use("/tweets", tweetsRoutes);
 
+// User login page
+  app.get("/login", (req, res) => {
+    let templateVars = {user: users[req.session.user_id], users: users};
+    res.render("login", templateVars);
+  })
+
+// User registration page
+  app.get("/register", (req, res) => {
+    console.log(db);
+    //let templateVars = { user: users[req.session.user_id] };
+    //res.render("register", templateVars);
+  });
+
   app.listen(PORT, () => {
-    console.log("Example app listening on port " + PORT);
+    console.log("tweeter app listening on port " + PORT);
   });
 })
 
