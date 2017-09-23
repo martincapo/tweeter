@@ -3,7 +3,6 @@
 // Basic express setup:
 const PORT          = 8080;
 const express       = require("express");
-const bcrypt = require('bcrypt');
 const bodyParser    = require("body-parser");
 const cookieSession = require('cookie-session');
 const morgan        = require('morgan');
@@ -56,6 +55,17 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   app.use("/tweets", tweetsRoutes);
 
   app.use("/users", usersRoutes);
+
+  // check session
+  app.get("/checksession", (req, res) => {
+    res.send(req.session.user_id);
+  });
+
+  // destory session
+  app.get("/destroysession", (req, res) => {
+    req.session = null;
+    res.send(null);
+  });
 
 
   app.listen(PORT, () => {

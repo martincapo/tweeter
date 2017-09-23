@@ -71,9 +71,22 @@ function toggleNewTweetTextArea() {
   });
 }
 
+function isUserActive() {
+  $.get("/users/active", (session) =>{
+    if (session) {
+      console.log(typeof(session));
+      $(".logout").hide();
+    } else {
+      $(".login").hide();
+    }
+  });
+}
+
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 $(document).ready(function() {
+
+   isUserActive();
 
   loadTweets();
 
@@ -87,14 +100,11 @@ $(document).ready(function() {
     $.post("users/logout")
     .done(function (result) {
       $(".logout").hide();
+      $(".login").show();
     });
   });
 
-  //  alert(session.user_id);
 
-  $.get("/users").done(function(result){
-    console.log(result);
-  })
 
 //Submit new tweet to database
   $("form" ).on( "submit", function( event ) {

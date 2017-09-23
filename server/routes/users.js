@@ -2,21 +2,12 @@
 
 const express       = require('express');
 const usersRoutes  = express.Router();
+const bcrypt = require('bcrypt');
 
 module.exports = function(DataHelpers) {
 
-  usersRoutes.get("/", function(req, res) {
-    let user_id = req.session.user_id;
-    DataHelpers.getUser(user_id, (err, user) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      }
-
-      if(!user) {
-        res.redirect("/users/login");
-      }
-
-    })
+  usersRoutes.get("/active", function(req, res) {
+    res.send(req.session.user_id);
   });
 
 // User Login
@@ -33,32 +24,34 @@ module.exports = function(DataHelpers) {
 
     const username = req.body.username;
     const password = req.body.password;
-    var IsUser = false;
+    var isUser = false;
+    var isPass = false;
 
     DataHelpers.getUsers((err, users) => {
 
       if (err) {
         res.status(500).json({ error: err.message });
+      }
 
-      } else {
     // Check if user is registed
-        IsUser = users.find(element => {
-          // 1. check user name
-          if(element.user === username) {
-            // 2. check password
-            if(bcrypt.compareSync(password, element.password)) {
-              req.session.user_id = element.id;
-              res.redirect("/");
-              return true;
-            } else {
-              res.status(400).json({ error: "password does not match"});
-              return true;
-            }
-          } else {
-            res.status(400).json({ error: "user name is not exist" });
-            return true;
+      users.find ((element) => {
+        // 1. check user name
+        if(element.user === username) {
+            isUser = true;
+          // 2. check password
+          if(bcrypt.compareSync(password, element.password)) {
+            req.session.user_id = element.id;
+            isPass = true;
           }
-        });
+        }
+      });
+
+      if (isUser && isPass) {
+        res.redirect("/");
+      } else if (isUser && !isPass) {
+        res.status(400).json({ error: "password does not match"});
+      } else {
+        res.status(400).json({ error: "user name is not exist" });
       }
     });
   });
@@ -77,7 +70,7 @@ module.exports = function(DataHelpers) {
 
   usersRoutes.post("/register", (req, res) => {
     if (!req.body.username) {
-      res.status(400).json({ error: 'invalid request: no data in POST body'});
+      res.status(400).json({ error: err.message });
       return;
     }
     // Store hash in user password DB
@@ -92,7 +85,7 @@ module.exports = function(DataHelpers) {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        res.redirect("/");
+        res.redirect("/users/login");
       }
     });
 
