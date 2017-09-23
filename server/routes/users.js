@@ -2,15 +2,28 @@
 
 const express       = require('express');
 const usersRoutes  = express.Router();
-const bcrypt = require('bcrypt');
 
 module.exports = function(DataHelpers) {
 
-  usersRoutes.get("/login", function(req, res) {
-      res.render("login");
-  })
+  usersRoutes.get("/", function(req, res) {
+    let user_id = req.session.user_id;
+    DataHelpers.getUser(user_id, (err, user) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      }
+
+      if(!user) {
+        res.redirect("/users/login");
+      }
+
+    })
+  });
 
 // User Login
+  usersRoutes.get("/login", function(req, res) {
+      res.render("login");
+  });
+
   usersRoutes.post("/login", (req, res) => {
 
     if (!req.body.username) {
@@ -22,7 +35,7 @@ module.exports = function(DataHelpers) {
     const password = req.body.password;
     var IsUser = false;
 
-    DataHelpers.getUser((err, users) => {
+    DataHelpers.getUsers((err, users) => {
 
       if (err) {
         res.status(500).json({ error: err.message });
@@ -50,12 +63,19 @@ module.exports = function(DataHelpers) {
     });
   });
 
+  // Logout
+  usersRoutes.post("/logout", (req, res) => {
+    req.session = null;
+    res.redirect('/');
+  });
+
+
 // User Registration
-  usersRoutes.get("/register", function(req, res) {
+  usersRoutes.get("/register", (req, res) => {
       res.render("register");
   })
 
-  usersRoutes.post("/register", function(req, res) {
+  usersRoutes.post("/register", (req, res) => {
     if (!req.body.username) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;

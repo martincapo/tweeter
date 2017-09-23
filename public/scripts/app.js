@@ -83,6 +83,19 @@ $(document).ready(function() {
      $(this).siblings(".num-likes").text($(this).data("likes"));
   });
 
+  $(".logout").on("click", function( event ) {
+    $.post("users/logout")
+    .done(function (result) {
+      $(".logout").hide();
+    });
+  });
+
+  //  alert(session.user_id);
+
+  $.get("/users").done(function(result){
+    console.log(result);
+  })
+
 //Submit new tweet to database
   $("form" ).on( "submit", function( event ) {
     event.preventDefault();
@@ -91,21 +104,21 @@ $(document).ready(function() {
 
     if(inputValue === null || inputValue === '') {
       alert("Tweet is empty!!! ");
-
+      return;
     } else if (inputValue.length > 140){
       alert("Maximum message length is 140.");
-
-    } else {
-      $.post("/tweets", textInput)
-      .done(function(result){
-        $(".textarea").val("");
-        $(".counter").text('140');
-        loadTweets();
-      })
-      .fail(function(error){
-        console.log(error);
-      });
+      return;
     }
+
+    $.post("/tweets", textInput)
+    .done(function(result){
+      $(".textarea").val("");
+      $(".counter").text('140');
+      loadTweets();
+    })
+    .fail(function(error){
+      console.log(error);
+    });
   });
 
   toggleNewTweetTextArea();

@@ -3,6 +3,7 @@
 // Basic express setup:
 const PORT          = 8080;
 const express       = require("express");
+const bcrypt = require('bcrypt');
 const bodyParser    = require("body-parser");
 const cookieSession = require('cookie-session');
 const morgan        = require('morgan');

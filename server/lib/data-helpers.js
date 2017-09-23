@@ -1,5 +1,7 @@
 "use strict";
 
+const Mongo    = require("mongodb");
+
 // Defines helper functions for saving and getting tweets, using the database `db`
 module.exports = function makeDataHelpers(db) {
   return {
@@ -27,10 +29,17 @@ module.exports = function makeDataHelpers(db) {
     },
 
     // Get all users in `db`
-    getUser: function(callback) {
+    getUsers: function(callback) {
       db.collection('users').find().toArray((err, results) => {
         if (err) throw err;
         callback(null, results);
+      });
+    },
+
+    getUser: function(user_id, callback) {
+      db.collection('users').findOne({ _id: new Mongo.ObjectID(user_id) }, (err, result) => {
+        if (err) throw err;
+        callback(null, result);
       });
     }
 
