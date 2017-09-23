@@ -18,6 +18,19 @@ module.exports = function makeDataHelpers(db) {
         const sortNewestFirst = (a, b) => a.created_at - b.created_at;
         callback(null, results.sort(sortNewestFirst));
       });
+    },
+
+    saveUser: function(newUser, callback) {
+      db.collection('users').insertOne(newUser);
+      callback(null, true);
+    },
+
+    getUser: function(callback) {
+      db.collection('users').find().toArray((err, results) => {
+        if (err) throw err;
+        callback(null, results);
+      });
     }
+
   }
 }

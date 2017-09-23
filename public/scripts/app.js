@@ -36,11 +36,6 @@ function createTweetElement(tweetData) {
     .append($like_button)
     .append(`<span class="num-likes">${tweetData.likes}</span>`);
 
-  // $like_button.click(function(event) {
-  //   console.log();
-
-  // })
-
 
   $header.append($('<img>').addClass('icon').attr('src', tweetData.user.avatars.small));
   $header.append($('<h4>').text(tweetData.user.name));
@@ -82,6 +77,9 @@ function toggleNewTweetTextArea() {
 $(document).ready(function() {
 
   loadTweets();
+
+
+  console.log(document.cookie);
 
 // liking Tweets
   $("#tweets-container").on("click", ".like_button", function( event ) {

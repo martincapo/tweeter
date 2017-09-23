@@ -3,7 +3,7 @@
  */
 
 #nav-bar {
-  padding: 0em 2em;
+  padding: 10px;
   color: #e8fdff;
   background-color: #00a087;
   position: fixed; /* Set the navbar to fixed position */
@@ -13,15 +13,19 @@
 }
 
 #nav-bar .logo {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   float: left;
 }
 
 #nav-bar .header {
   margin-left: 10px;
-  font-size: 2em;
-  line-height: 80px;
+  font-size: 24px;
+  line-height: 60px;
+}
+
+#nav-bar .left-contents {
+    float: right;
 }
 
 #nav-bar button {
@@ -30,14 +34,14 @@
   border-radius: 5px;
   color: green;
   cursor: pointer;
-  padding: 15px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 25px;
-  float: right;
+  font-size: 20px;
   margin-top: 7px;
+  padding: 10px;
 }
+
 
 #nav-bar button:hover {
   background-color: #eee;

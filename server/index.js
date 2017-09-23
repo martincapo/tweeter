@@ -5,7 +5,6 @@ const PORT          = 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
 const cookieSession = require('cookie-session');
-const bcrypt = require('bcrypt');
 const morgan = require('morgan');
 
 const app           = express();
@@ -30,9 +29,6 @@ app.set("view engine", "ejs");
 app.use(morgan('dev'))
 
 
-
-
-
 // Connect to MongoDB
 MongoClient.connect(MONGODB_URI, (err, db) => {
   if (err) {
@@ -54,21 +50,13 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
 
+  const usersRoutes = require("./routes/users")(DataHelpers);
+
 // Mount the tweets routes at the "/tweets" path prefix:
   app.use("/tweets", tweetsRoutes);
 
-// User login page
-  app.get("/login", (req, res) => {
-    let templateVars = {user: users[req.session.user_id], users: users};
-    res.render("login", templateVars);
-  })
+  app.use("/users", usersRoutes);
 
-// User registration page
-  app.get("/register", (req, res) => {
-    console.log(db);
-    //let templateVars = { user: users[req.session.user_id] };
-    //res.render("register", templateVars);
-  });
 
   app.listen(PORT, () => {
     console.log("tweeter app listening on port " + PORT);
