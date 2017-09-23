@@ -15,3 +15,18 @@ This repository is the starter code for the project: Students will fork and clon
 
 - Express
 - Node 5.10.x or above
+- EJS
+- bcrypt
+- body-parser
+- cookie-session
+- chance
+- ejs
+- express
+- md5
+- mongodb
+- morgan
+- nodemon
+
+!["Screenshot of Tweeter page"](https://github.com/martincapo/tweeter/blob/master/doc/tweeter.png)
+
+
