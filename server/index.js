@@ -5,7 +5,7 @@ const PORT          = 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
 const cookieSession = require('cookie-session');
-const morgan = require('morgan');
+const morgan        = require('morgan');
 
 const app           = express();
 
@@ -27,7 +27,6 @@ app.set("view engine", "ejs");
 
 // logging middleware so we can see what's going on
 app.use(morgan('dev'))
-
 
 // Connect to MongoDB
 MongoClient.connect(MONGODB_URI, (err, db) => {

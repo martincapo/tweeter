@@ -4,14 +4,13 @@ const express       = require('express');
 const usersRoutes  = express.Router();
 const bcrypt = require('bcrypt');
 
-
 module.exports = function(DataHelpers) {
 
   usersRoutes.get("/login", function(req, res) {
       res.render("login");
   })
 
-  // User Login
+// User Login
   usersRoutes.post("/login", (req, res) => {
 
     if (!req.body.username) {
@@ -51,7 +50,7 @@ module.exports = function(DataHelpers) {
     });
   });
 
-
+// User Registration
   usersRoutes.get("/register", function(req, res) {
       res.render("register");
   })

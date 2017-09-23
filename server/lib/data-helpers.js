@@ -20,11 +20,13 @@ module.exports = function makeDataHelpers(db) {
       });
     },
 
+    // Saves a user to `db`
     saveUser: function(newUser, callback) {
       db.collection('users').insertOne(newUser);
       callback(null, true);
     },
 
+    // Get all users in `db`
     getUser: function(callback) {
       db.collection('users').find().toArray((err, results) => {
         if (err) throw err;

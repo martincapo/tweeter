@@ -11,7 +11,6 @@ function renderTweets(tweets) {
   });
 }
 
-
 function createTweetElement(tweetData) {
 
   var $tweet        = $('<article class="tweet">');
@@ -77,9 +76,6 @@ function toggleNewTweetTextArea() {
 $(document).ready(function() {
 
   loadTweets();
-
-
-  console.log(document.cookie);
 
 // liking Tweets
   $("#tweets-container").on("click", ".like_button", function( event ) {
